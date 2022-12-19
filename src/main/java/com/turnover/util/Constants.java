@@ -1,5 +1,7 @@
 package com.turnover.util;
 
+import java.util.Set;
+
 public final class Constants {
     public static final String JANUARY = "Січень";
     public static final String FEBRUARY = "Лютий";
@@ -22,6 +24,11 @@ public final class Constants {
     public static final String SECOND_PREV = "secondPrev";
     public static final String THIRD = "third";
     public static final String THIRD_PREV = "thirdPrev";
+
+    public static final String SALES_PER_DAY = "Факт в день";
+
+    public static final Set<String> NO_SATURDAY_STORES = Set.of("Стрий Валова");
+    public static final Set<String> SANITARY_DAY_STORES = Set.of("Рівне Андріївський");
 
     public static final String FILE_PATH = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\001.xlsx";
 
