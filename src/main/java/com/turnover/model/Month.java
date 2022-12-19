@@ -8,5 +8,5 @@ import lombok.experimental.Accessors;
 public class Month {
     private String name;
     private Integer days;
-    private Integer workDays;
+    private Integer saturdays;
 }
