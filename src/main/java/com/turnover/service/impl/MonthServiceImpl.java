@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import static com.turnover.util.Constants.APRIL;
 import static com.turnover.util.Constants.AUGUST;
@@ -49,7 +47,7 @@ public class MonthServiceImpl implements MonthService {
             case 8 -> AUGUST;
             case 9 -> SEPTEMBER;
             case 10 -> OCTOBER;
-            case 11-> NOVEMBER;
+            case 11 -> NOVEMBER;
             case 12 -> DECEMBER;
             default -> throw new IllegalStateException("Unexpected value");
         };
@@ -64,7 +62,7 @@ public class MonthServiceImpl implements MonthService {
         LocalDate fromDate = LocalDate.of(2000 + yearNumber, monthNumber, 1);
         LocalDate toDate = fromDate.plusMonths(1);
         int saturday = 0;
-        while (!fromDate.isAfter(toDate)) {
+        while (fromDate.isBefore(toDate)) {
             if (fromDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
                 saturday++;
             }
