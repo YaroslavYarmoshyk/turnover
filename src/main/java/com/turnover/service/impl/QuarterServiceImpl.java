@@ -7,6 +7,7 @@ import com.turnover.service.QuarterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +31,14 @@ public class QuarterServiceImpl implements QuarterService {
     public Quarter createQuarter(final Integer monthNumber, final Integer yearNumber) {
         plannedMonthNumber = monthNumber;
         plannedYearNumber = yearNumber;
+
+        return new Quarter().setMonths(getMonthsMap());
+    }
+
+    @Override
+    public Quarter createQuarter() {
+        plannedMonthNumber = LocalDate.now().getMonthValue();
+        plannedYearNumber = Integer.valueOf(String.valueOf(LocalDate.now().getYear()).substring(1));
 
         return new Quarter().setMonths(getMonthsMap());
     }

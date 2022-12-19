@@ -23,4 +23,6 @@ public final class Constants {
     public static final String THIRD = "third";
     public static final String THIRD_PREV = "thirdPrev";
 
+    public static final String FILE_PATH = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\001.xlsx";
+
 }
