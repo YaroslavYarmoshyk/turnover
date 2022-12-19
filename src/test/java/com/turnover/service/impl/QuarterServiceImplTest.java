@@ -45,7 +45,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -59,7 +59,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -73,7 +73,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -87,7 +87,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -101,7 +101,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -115,7 +115,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -129,7 +129,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -143,7 +143,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -157,7 +157,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -171,7 +171,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -185,7 +185,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -199,7 +199,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -213,7 +213,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -227,7 +227,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -241,7 +241,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -255,7 +255,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -269,7 +269,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -283,7 +283,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -297,7 +297,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -311,7 +311,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -325,7 +325,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -339,7 +339,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -353,7 +353,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
     @Test
@@ -367,7 +367,7 @@ class QuarterServiceImplTest {
 
         assertEquals(expectedName, actualMonth.getName());
         assertEquals(expectedDays, actualMonth.getDays());
-        assertEquals(expectedSaturdays, actualMonth.getSaturdays());
+        assertEquals(expectedSaturdays, actualMonth.getSundays());
     }
 
 }

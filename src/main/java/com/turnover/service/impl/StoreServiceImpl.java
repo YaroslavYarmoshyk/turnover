@@ -75,16 +75,16 @@ public class StoreServiceImpl implements StoreService {
         final Month secondMonth = quarter.getMonths().get(SECOND);
         final Month thirdMonth = quarter.getMonths().get(THIRD);
         for (Store store: stores) {
-            store.setFirstMonthDays(defineDaysQuantity(store.getName(), firstMonth.getDays(), firstMonth.getSaturdays()));
-            store.setSecondMonthDays(defineDaysQuantity(store.getName(), secondMonth.getDays(), secondMonth.getSaturdays()));
-            store.setThirdMonthDays(defineDaysQuantity(store.getName(), thirdMonth.getDays(), thirdMonth.getSaturdays()));
+            store.setFirstMonthDays(defineDaysQuantity(store.getName(), firstMonth.getDays(), firstMonth.getSundays()));
+            store.setSecondMonthDays(defineDaysQuantity(store.getName(), secondMonth.getDays(), secondMonth.getSundays()));
+            store.setThirdMonthDays(defineDaysQuantity(store.getName(), thirdMonth.getDays(), thirdMonth.getSundays()));
         }
     }
 
     private Integer defineDaysQuantity(final String storeName,
                                        final Integer days,
                                        final Integer saturdays) {
-        if (NO_SATURDAY_STORES.contains(storeName)) {
+        if (NO_SUNDAY_STORES.contains(storeName)) {
             return days - saturdays;
         }
         if (SANITARY_DAY_STORES.contains(storeName)) {

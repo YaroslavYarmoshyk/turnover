@@ -28,11 +28,11 @@ public class MonthServiceImpl implements MonthService {
     public Month createMonth(final Integer monthNumber, final Integer yearNumber) {
         final String monthName = defineMonthPart(monthNumber) + " " + yearNumber;
         final Integer days = defineDays(monthNumber, yearNumber);
-        final Integer saturdays = defineSaturdays(monthNumber, yearNumber);
+        final Integer Sundays = defineSundays(monthNumber, yearNumber);
 
         return new Month().setName(monthName)
                 .setDays(days)
-                .setSaturdays(saturdays);
+                .setSundays(Sundays);
     }
 
     private String defineMonthPart(final Integer monthNumber) {
@@ -58,17 +58,17 @@ public class MonthServiceImpl implements MonthService {
         return yearMontObject.lengthOfMonth();
     }
 
-    private int defineSaturdays(final Integer monthNumber, final Integer yearNumber) {
+    private int defineSundays(final Integer monthNumber, final Integer yearNumber) {
         LocalDate fromDate = LocalDate.of(2000 + yearNumber, monthNumber, 1);
         LocalDate toDate = fromDate.plusMonths(1);
-        int saturday = 0;
+        int sunday = 0;
         while (fromDate.isBefore(toDate)) {
-            if (fromDate.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
-                saturday++;
+            if (fromDate.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+                sunday++;
             }
 
             fromDate = fromDate.plusDays(1);
         }
-        return saturday;
+        return sunday;
     }
 }

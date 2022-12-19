@@ -2,13 +2,9 @@ package com.turnover.service.impl;
 
 import com.turnover.service.MonthService;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MonthServiceImplTest {
     private static MonthService monthService;
@@ -33,9 +29,9 @@ class MonthServiceImplTest {
     }
 
     @Test
-    void testMonthCreation_Saturday() {
+    void testMonthCreation_Sunday() {
         final int expected = 5;
-        final int actual = monthService.createMonth(12, 22).getSaturdays();
+        final int actual = monthService.createMonth(1, 23).getSundays();
         assertEquals(expected, actual);
     }
 }

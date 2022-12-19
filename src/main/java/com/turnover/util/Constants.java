@@ -27,7 +27,7 @@ public final class Constants {
 
     public static final String SALES_PER_DAY = "Факт в день";
 
-    public static final Set<String> NO_SATURDAY_STORES = Set.of("Стрий Валова");
+    public static final Set<String> NO_SUNDAY_STORES = Set.of("Стрий Валова");
     public static final Set<String> SANITARY_DAY_STORES = Set.of("Рівне Андріївський");
 
     public static final String FILE_PATH = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\001.xlsx";
