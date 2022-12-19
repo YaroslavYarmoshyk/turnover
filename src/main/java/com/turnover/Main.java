@@ -13,7 +13,8 @@ public class Main {
         final MonthService monthService = new MonthServiceImpl();
         final QuarterService quarterService = new QuarterServiceImpl(monthService);
         final StoreService storeService = new StoreServiceImpl();
-        final Quarter quarter = quarterService.createQuarter(1, 23);
+//        final Quarter quarter = quarterService.createQuarter(1, 23);
+        final Quarter quarter = quarterService.createQuarter();
         storeService.getStores(quarter);
     }
 }

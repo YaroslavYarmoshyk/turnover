@@ -37,8 +37,9 @@ public class QuarterServiceImpl implements QuarterService {
 
     @Override
     public Quarter createQuarter() {
-        plannedMonthNumber = LocalDate.now().getMonthValue();
-        plannedYearNumber = Integer.valueOf(String.valueOf(LocalDate.now().getYear()).substring(1));
+        plannedMonthNumber = getValidMonthNumber(LocalDate.now().getMonthValue() + 1);
+        final Integer year = LocalDate.now().getMonthValue() == 12 ? LocalDate.now().getYear() + 1 : LocalDate.now().getYear();
+        plannedYearNumber = Integer.valueOf(String.valueOf(year).substring(1));
 
         return new Quarter().setMonths(getMonthsMap());
     }
