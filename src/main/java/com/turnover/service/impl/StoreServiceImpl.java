@@ -47,7 +47,8 @@ public class StoreServiceImpl implements StoreService {
         for (ExcelReader.Row row : rows) {
             final ExcelReader.Cell storeCell = row.getCells().get(0);
             if (isValidStore(storeCell)) {
-                final String storeName = storeCell.getStringCellValue();
+                final String storeCellName = storeCell.getStringCellValue();
+                final String storeName = storeCellName.contains(TOTAL) ? TOTAL : storeCellName;
                 final Store store = new Store().setName(storeName);
                 stores.add(store);
             }
@@ -60,6 +61,9 @@ public class StoreServiceImpl implements StoreService {
                                   final BiConsumer<Store, BigDecimal> consumer) {
         final int salesColIndex = getColIndexByName(rows.get(0).getCells(), SALES_PER_DAY);
         for (Store store : stores) {
+            if (isRegion(store.getName())) {
+                continue;
+            }
             final ExcelReader.Row row = getRowByStore(rows, store.getName());
             if (!row.getCells().isEmpty()) {
                 final ExcelReader.Cell salesCell = row.getCells().get(salesColIndex);
@@ -70,11 +74,21 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
+    private void populateAvgSalesRegions(final List<Store> stores) {
+        Store region = new Store();
+        for (Store store: stores) {
+//            if (isRegion(store))
+        }
+    }
+
     private void populateDays(final List<Store> stores, final Quarter quarter) {
         final Month firstMonth = quarter.getMonths().get(FIRST);
         final Month secondMonth = quarter.getMonths().get(SECOND);
         final Month thirdMonth = quarter.getMonths().get(THIRD);
         for (Store store: stores) {
+            if (isRegion(store.getName())) {
+                continue;
+            }
             store.setFirstMonthDays(defineDaysQuantity(store.getName(), firstMonth.getDays(), firstMonth.getSundays()));
             store.setSecondMonthDays(defineDaysQuantity(store.getName(), secondMonth.getDays(), secondMonth.getSundays()));
             store.setThirdMonthDays(defineDaysQuantity(store.getName(), thirdMonth.getDays(), thirdMonth.getSundays()));
@@ -102,7 +116,8 @@ public class StoreServiceImpl implements StoreService {
 
     private boolean isValidStore(final ExcelReader.Cell cell) {
         try {
-            return !isRegion(cell.getStringCellValue()) && !cell.getStringCellValue().contains(".-");
+            final String cellValue = cell.getStringCellValue();
+            return !Strings.isBlank(cellValue) && !cellValue.contains(".-");
         } catch (final Exception e) {
             return false;
         }

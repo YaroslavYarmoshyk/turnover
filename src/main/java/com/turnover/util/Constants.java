@@ -26,6 +26,7 @@ public final class Constants {
     public static final String THIRD_PREV = "thirdPrev";
 
     public static final String SALES_PER_DAY = "Факт в день";
+    public static final String TOTAL = "Разом";
 
     public static final Set<String> NO_SUNDAY_STORES = Set.of("Стрий Валова");
     public static final Set<String> SANITARY_DAY_STORES = Set.of("Рівне Андріївський");
