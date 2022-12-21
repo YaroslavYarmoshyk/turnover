@@ -4,7 +4,9 @@ import com.turnover.model.Month;
 import com.turnover.model.Quarter;
 import com.turnover.model.Store;
 import com.turnover.reader.ExcelReader;
+import com.turnover.service.ExcelReaderService;
 import com.turnover.service.StoreService;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.stereotype.Service;
@@ -19,31 +21,32 @@ import static com.turnover.enums.Regions.isRegion;
 import static com.turnover.util.Constants.*;
 
 @Service
+@RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
+    private final ExcelReaderService readerService;
 
     @Override
     public List<Store> getStores(Quarter quarter) throws Exception {
-        final ExcelReader reader = new ExcelReader(FILE_PATH);
         final String currentMonthName = quarter.getMonths().get(CURRENT).getName();
-        final List<Store> stores = getCurrentStores(currentMonthName, reader);
+        final List<Store> stores = getCurrentStores(currentMonthName);
         final String currentMonthNamePrev = quarter.getMonths().get(CURRENT_PREV).getName();
         final String firstMonthNamePrev = quarter.getMonths().get(FIRST_PREV).getName();
         final String secondMonthNamePrev = quarter.getMonths().get(SECOND_PREV).getName();
         final String thirdMonthNamePrev = quarter.getMonths().get(THIRD_PREV).getName();
 
-        populateAvgSales(stores, reader.readSheet(currentMonthName), Store::setAvgSalPrevMonthActualYear);
-        populateAvgSales(stores, reader.readSheet(currentMonthNamePrev), Store::setAvgSalPrevMonth);
-        populateAvgSales(stores, reader.readSheet(firstMonthNamePrev), Store::setAvgSalFirstMonth);
-        populateAvgSales(stores, reader.readSheet(secondMonthNamePrev), Store::setAvgSalSecondMonth);
-        populateAvgSales(stores, reader.readSheet(thirdMonthNamePrev), Store::setAvgSalThirdMonth);
+        populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, currentMonthName), Store::setAvgSalPrevMonthActualYear);
+        populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, currentMonthNamePrev), Store::setAvgSalPrevMonth);
+        populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, firstMonthNamePrev), Store::setAvgSalFirstMonth);
+        populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, secondMonthNamePrev), Store::setAvgSalSecondMonth);
+        populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, thirdMonthNamePrev), Store::setAvgSalThirdMonth);
 
         populateDays(stores, quarter);
         return stores;
     }
 
-    private List<Store> getCurrentStores(final String currentMonthName, final ExcelReader reader) throws Exception {
+    private List<Store> getCurrentStores(final String currentMonthName) throws Exception {
         final List<Store> stores = new ArrayList<>();
-        final List<ExcelReader.Row> rows = reader.readSheet(currentMonthName);
+        final List<ExcelReader.Row> rows = readerService.read(FILE_PATH_SOURCE, currentMonthName);
         for (ExcelReader.Row row : rows) {
             final ExcelReader.Cell storeCell = row.getCells().get(0);
             if (isValidStore(storeCell)) {
@@ -74,18 +77,11 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
-    private void populateAvgSalesRegions(final List<Store> stores) {
-        Store region = new Store();
-        for (Store store: stores) {
-//            if (isRegion(store))
-        }
-    }
-
     private void populateDays(final List<Store> stores, final Quarter quarter) {
         final Month firstMonth = quarter.getMonths().get(FIRST);
         final Month secondMonth = quarter.getMonths().get(SECOND);
         final Month thirdMonth = quarter.getMonths().get(THIRD);
-        for (Store store: stores) {
+        for (Store store : stores) {
             if (isRegion(store.getName())) {
                 continue;
             }

@@ -31,6 +31,19 @@ public final class Constants {
     public static final Set<String> NO_SUNDAY_STORES = Set.of("Стрий Валова");
     public static final Set<String> SANITARY_DAY_STORES = Set.of("Рівне Андріївський");
 
-    public static final String FILE_PATH = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\001.xlsx";
+    public static final String STORE = "Магазин";
+    public static final String AVG_SALES = "СДП ";
+    public static final String DYNAMIC = "Динаміка ";
+    public static final String AVG_SALES_DYNAMIC = "СДП по динаміці ";
+    public static final String DAYS = "Дні роботи ";
+    public static final String PLAN_BY_DYNAMIC = "План по динаміці ";
+    public static final String CORRECTED_PLAN = "Скорегований план ";
+    public static final String TEMP_WO_DYNAMIC = "Темп при відсутності динаміки";
+    public static final String TEMP_NEGATIVE_DYNAMIC = "Темп при від'ємному приросту";
+
+    public static final String QUARTER_PLAN = "Квартальний план ";
+
+    public static final String FILE_PATH_SOURCE = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\001.xlsx";
+    public static final String FILE_PATH_RESULT = "C:\\Users\\Ya.Yarmoshyk\\Desktop\\Звіти на java\\План по магазинам\\дані\\";
 
 }

@@ -31,15 +31,10 @@ public class ExcelReader {
 
     private List<ExcelReader.Row> excelData;
     private int minColumns;
-    private final String excelFile;
 
-    public ExcelReader(String excelFile) {
-        this.excelFile = excelFile;
-    }
+    public List<ExcelReader.Row> readSheet(final String filePath, final String sheetName) throws Exception {
 
-    public List<ExcelReader.Row> readSheet(final String sheetName) throws Exception {
-
-        File xlsxFile = new File(excelFile);
+        File xlsxFile = new File(filePath);
         if (!xlsxFile.exists()) {
             throw new FileNotFoundException("Not found or not a file: " + xlsxFile.getPath());
         }
