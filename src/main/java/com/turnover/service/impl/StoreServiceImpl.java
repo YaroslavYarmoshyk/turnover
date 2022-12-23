@@ -4,6 +4,7 @@ import com.turnover.model.Month;
 import com.turnover.model.Quarter;
 import com.turnover.model.Store;
 import com.turnover.reader.ExcelReader;
+import com.turnover.service.CalculationService;
 import com.turnover.service.ExcelReaderService;
 import com.turnover.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import static com.turnover.util.Constants.*;
 @RequiredArgsConstructor
 public class StoreServiceImpl implements StoreService {
     private final ExcelReaderService readerService;
+    private final CalculationService calculationService;
 
     @Override
     public List<Store> getStores(Quarter quarter) throws Exception {
@@ -41,6 +43,7 @@ public class StoreServiceImpl implements StoreService {
         populateAvgSales(stores, readerService.read(FILE_PATH_SOURCE, thirdMonthNamePrev), Store::setAvgSalThirdMonth);
 
         populateDays(stores, quarter);
+        calculationService.calculateDynamics(stores);
         return stores;
     }
 

@@ -14,7 +14,8 @@ public class Main {
         final MonthService monthService = new MonthServiceImpl();
         final QuarterService quarterService = new QuarterServiceImpl(monthService);
         final ExcelReaderService readerService = new ExcelReaderServiceImpl();
-        final StoreService storeService = new StoreServiceImpl(readerService);
+        final CalculationService calculationService = new CalculationServiceImpl();
+        final StoreService storeService = new StoreServiceImpl(readerService, calculationService);
         final ExcelService excelService = new ExcelServiceImpl();
 //        final Quarter quarter = quarterService.createQuarter(1, 23);
         final Quarter quarter = quarterService.createQuarter();

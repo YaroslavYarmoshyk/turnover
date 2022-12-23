@@ -40,6 +40,7 @@ public final class Constants {
     public static final String CORRECTED_PLAN = "Скорегований план ";
     public static final String TEMP_WO_DYNAMIC = "Темп при відсутності динаміки";
     public static final String TEMP_NEGATIVE_DYNAMIC = "Темп при від'ємному приросту";
+    public static final String TEMP_MAX_DYNAMIC = "Темп максимальної динаміки";
 
     public static final String QUARTER_PLAN = "Квартальний план ";
 
