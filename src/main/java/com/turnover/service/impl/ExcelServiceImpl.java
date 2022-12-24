@@ -153,12 +153,11 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     private void addResultTotal(final Sheet sheet) {
+        final List<Integer> sumRegionRows = getSumRegionRows();
         final int totalRow = regionRows.get(regionRows.size() - 1);
-        regionRows.remove(regionRows.size() - 1); // remove total
-        regionRows.remove(regionRows.size() - 3); // remove union regions
 
         for (final Integer col : summarizeColumns) {
-            final String[] cells = regionRows.stream()
+            final String[] cells = sumRegionRows.stream()
                     .map(row -> new CellReference(row, col))
                     .map(CellReference::formatAsString)
                     .toArray(String[]::new);
@@ -170,6 +169,14 @@ public class ExcelServiceImpl implements ExcelService {
             resultRow.getCell(7).setCellFormula(getDynFormula(totalRow, 7));
             resultRow.getCell(8).setCellFormula(getDynFormula(totalRow, 8));
         }
+    }
+
+    private List<Integer> getSumRegionRows() {
+        List<Integer> sumRegionRows = new ArrayList<>(List.copyOf(regionRows));
+        sumRegionRows.remove(sumRegionRows.size() - 1);
+        sumRegionRows.remove(sumRegionRows.size() - 3);
+
+        return sumRegionRows;
     }
 
     private void populateRegion(int startRow, int endRow, Row row) {
