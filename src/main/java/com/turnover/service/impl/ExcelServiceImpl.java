@@ -68,9 +68,9 @@ public class ExcelServiceImpl implements ExcelService {
         row.createCell(7).setCellValue(getDynamicName(firstMonthPrev, secondMonthPrev));
         row.createCell(8).setCellValue(getDynamicName(secondMonthPrev, thirdMonthPrev));
 
-        row.createCell(9).setCellValue(AVG_SALES_DYNAMIC + firstMonthPrev);
-        row.createCell(10).setCellValue(AVG_SALES_DYNAMIC + secondMonthPrev);
-        row.createCell(11).setCellValue(AVG_SALES_DYNAMIC + thirdMonthPrev);
+        row.createCell(9).setCellValue(AVG_SALES_DYNAMIC + firstMonth);
+        row.createCell(10).setCellValue(AVG_SALES_DYNAMIC + secondMonth);
+        row.createCell(11).setCellValue(AVG_SALES_DYNAMIC + thirdMonth);
 
         row.createCell(12).setCellValue(DAYS + firstMonth);
         row.createCell(13).setCellValue(DAYS + secondMonth);
