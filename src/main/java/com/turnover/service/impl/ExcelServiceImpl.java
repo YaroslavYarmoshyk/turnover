@@ -4,6 +4,7 @@ import com.turnover.enums.Regions;
 import com.turnover.model.Quarter;
 import com.turnover.model.Store;
 import com.turnover.service.ExcelService;
+import com.turnover.util.ExcelUtils;
 import com.turnover.util.FormulasUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellReference;
@@ -13,17 +14,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import static com.turnover.util.Constants.*;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
 public class ExcelServiceImpl implements ExcelService {
-    private Map<String, int[]> regionRows = new HashMap<>();
+    private final List<Integer> regionRows = new ArrayList<>();
+    private List<Integer> summarizeColumns = new ArrayList<>();
     private Workbook workbook;
 
     @Override
@@ -32,7 +34,8 @@ public class ExcelServiceImpl implements ExcelService {
         final Sheet sheet = workbook.createSheet("result");
 
         createHeader(sheet, quarter);
-        populateSheet(sheet, stores);
+        populateSheetWithStores(sheet, stores);
+        addRegionTotals(sheet);
         return workbook;
     }
 
@@ -83,13 +86,16 @@ public class ExcelServiceImpl implements ExcelService {
         row.createCell(25).setCellValue(StringUtils.capitalize(secondMonth));
         row.createCell(26).setCellValue(StringUtils.capitalize(thirdMonth));
 
+        summarizeColumns = List.of(1, 2, 3,4,5,9,10,11,15,16,17,18,19,20);
+
         row.setRowStyle(getHeaderStyle());
     }
 
-    private void populateSheet(final Sheet sheet, final List<Store> stores) {
+    private void populateSheetWithStores(final Sheet sheet, final List<Store> stores) {
         int rowIndex = 1;
+        ExcelUtils.createCells(sheet, rowIndex, 0, stores.size(), 20);
         for (Store store : stores) {
-            final Row row = sheet.createRow(rowIndex++);
+            final Row row = sheet.getRow(rowIndex++);
             setValueByColumn(row, 0, store.getName());
             setValueByColumn(row, 1, store.getAvgSalPrevMonthActualYear());
             setValueByColumn(row, 2, store.getAvgSalPrevMonth());
@@ -104,26 +110,63 @@ public class ExcelServiceImpl implements ExcelService {
             final int rowNum = row.getRowNum();
             final int totalRow = stores.size();
             if (!Regions.isRegion(store.getName())) {
-                row.createCell(9).setCellFormula(getAvgDynFormula(rowNum, 9, true));
-                row.createCell(10).setCellFormula(getAvgDynFormula(rowNum, 10, false));
-                row.createCell(11).setCellFormula(getAvgDynFormula(rowNum, 11, false));
+                row.getCell(9).setCellFormula(getAvgDynFormula(rowNum, 9, true));
+                row.getCell(10).setCellFormula(getAvgDynFormula(rowNum, 10, false));
+                row.getCell(11).setCellFormula(getAvgDynFormula(rowNum, 11, false));
 
-                row.createCell(12).setCellValue(store.getFirstMonthDays());
-                row.createCell(13).setCellValue(store.getSecondMonthDays());
-                row.createCell(14).setCellValue(store.getThirdMonthDays());
+                row.getCell(12).setCellValue(store.getFirstMonthDays());
+                row.getCell(13).setCellValue(store.getSecondMonthDays());
+                row.getCell(14).setCellValue(store.getThirdMonthDays());
 
-                row.createCell(15).setCellFormula(getPlanByDynamicFormula(rowNum, 15));
-                row.createCell(16).setCellFormula(getPlanByDynamicFormula(rowNum, 16));
-                row.createCell(17).setCellFormula(getPlanByDynamicFormula(rowNum, 17));
-
-                row.createCell(18).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 18));
-                row.createCell(19).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 19));
-                row.createCell(20).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 20));
+                row.getCell(18).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 18));
+                row.getCell(19).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 19));
+                row.getCell(20).setCellFormula(getCorrectedPlanFormula(rowNum, totalRow, 20));
+            } else {
+                regionRows.add(rowNum);
             }
+            row.getCell(15).setCellFormula(getPlanByDynamicFormula(rowNum, 15));
+            row.getCell(16).setCellFormula(getPlanByDynamicFormula(rowNum, 16));
+            row.getCell(17).setCellFormula(getPlanByDynamicFormula(rowNum, 17));
         }
         sheet.getRow(1).createCell(21).setCellValue(0.03);
         sheet.getRow(1).createCell(22).setCellValue(-0.05);
         sheet.getRow(1).createCell(23).setCellValue(0.15);
+    }
+
+    private void addRegionTotals(final Sheet sheet) {
+        for (int i = 0; i < regionRows.size() - 1; i++) {
+            final int regionRow = regionRows.get(i);
+            final int startRow = regionRows.get(i) + 1;
+            final int endRow = regionRows.get(i + 1) - 1;
+
+            final Row row = sheet.getRow(regionRow);
+            if (!Regions.isUnionRegions(row.getCell(0).getStringCellValue())) {
+                populateRegion(startRow, endRow, row);
+            } else {
+                populateUnionRegions(startRow, regionRows.get(i + 2), row);
+            }
+            row.getCell(6).setCellFormula(getDynFormula(regionRow, 6));
+            row.getCell(7).setCellFormula(getDynFormula(regionRow, 7));
+            row.getCell(8).setCellFormula(getDynFormula(regionRow, 8));
+        }
+    }
+
+    private void populateRegion(int startRow, int endRow, Row row) {
+        for (Integer col : summarizeColumns) {
+            row.getCell(col).setCellFormula(getRegionSum(startRow, endRow, col));
+        }
+    }
+
+    private void populateUnionRegions(int startRow, int endRow, Row row) {
+        for (Integer col : summarizeColumns) {
+            row.getCell(col).setCellFormula(getUnionRegionsSum(startRow, endRow, col));
+        }
+    }
+
+    private String getDynFormula(int currentRow, int currentCol) {
+        final String firstMonthCell = new CellReference(currentRow, currentCol - 4).formatAsString();
+        final String secondMonthCell = new CellReference(currentRow, currentCol - 3).formatAsString();
+        return FormulasUtils.getDynFormula(firstMonthCell, secondMonthCell);
     }
 
     private String getAvgDynFormula(final int row, final int currentCol, final boolean isFirstMonth) {
@@ -149,8 +192,19 @@ public class ExcelServiceImpl implements ExcelService {
         return FormulasUtils.getCorrectedPlanFormula(planByDynCell, totalCell, totalAmountCell);
     }
 
+    private String getRegionSum(final int startRow, final int endRow, final int currentCol) {
+        return FormulasUtils.getRegionSum(startRow, endRow, currentCol);
+    }
+
+    private String getUnionRegionsSum(final int startRow, final int endRow, final int currentCol) {
+        return FormulasUtils.getUnionRegionsSum(startRow, endRow, currentCol);
+    }
+
     private <T> void setValueByColumn(final Row row, final int col, final T value) {
-        final Cell cell = row.createCell(col);
+        final Cell cell = row.getCell(col);
+        if (isNull(cell)) {
+            return;
+        }
         if (nonNull(value)) {
             if (value instanceof BigDecimal) {
                 if (Objects.equals(value, BigDecimal.ZERO)) {

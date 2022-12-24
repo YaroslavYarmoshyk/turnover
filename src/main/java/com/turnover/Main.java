@@ -17,7 +17,7 @@ public class Main {
         final CalculationService calculationService = new CalculationServiceImpl();
         final StoreService storeService = new StoreServiceImpl(readerService, calculationService);
         final ExcelService excelService = new ExcelServiceImpl();
-//        final Quarter quarter = quarterService.createQuarter(1, 23);
+//        final Quarter quarter = quarterService.createQuarter(07, 21);
         final Quarter quarter = quarterService.createQuarter();
         final List<Store> stores = storeService.getStores(quarter);
 //        calculationService.calculateDynamics(stores);

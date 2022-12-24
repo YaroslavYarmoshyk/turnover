@@ -7,14 +7,23 @@ public final class FormulasUtils {
     public static final String IFERROR = "IFERROR";
 
     public static String getRange(final int startRow, final int startColumn, final int endRow, final int endColumn) {
-        final String from = new CellReference(startRow + 1, startColumn + 1).formatAsR1C1String();
-        final String to = new CellReference(endRow + 1, endColumn + 1).formatAsR1C1String();
+        final String from = new CellReference(startRow, startColumn).formatAsString();
+        final String to = new CellReference(endRow, endColumn).formatAsString();
         return from + ":" + to;
     }
 
-    public static String getRange(final int startRow, final int startColumn) {
-        return new CellReference(startRow + 1, startColumn + 1).formatAsR1C1String();
+    public static String getRange(final int row, final int column) {
+        return new CellReference(row, column).formatAsString();
     }
+
+    public static String getRegionSum(final int startRow, final int endRow, final int currentCol) {
+        return "SUM(" + getRange(startRow, currentCol, endRow, currentCol) + ")";
+    }
+
+    public static String getUnionRegionsSum(final int startRow, final int endRow, final int currentCol) {
+        return "SUM(" + getRange(startRow, currentCol) + "," + getRange(endRow, currentCol) + ")";
+    }
+
 
     public static String getAvgDynamicFormula(final String dynamicCell,
                                               final String avgCell,
@@ -37,5 +46,9 @@ public final class FormulasUtils {
 
     public static String getCorrectedPlanFormula(final String planByDynCell, final String totalCell, final String totalAmountCell) {
         return IFERROR + "(" + planByDynCell + "/" + totalCell + "*" + totalAmountCell + ",\"\")";
+    }
+
+    public static String getDynFormula(final String firstMonthCell, final String secondMonthCell) {
+        return IFERROR + "(" + firstMonthCell + "/" + secondMonthCell + "-1,\"\")";
     }
 }
