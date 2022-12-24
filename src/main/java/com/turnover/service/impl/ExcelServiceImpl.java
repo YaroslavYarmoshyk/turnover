@@ -3,12 +3,16 @@ package com.turnover.service.impl;
 import com.turnover.enums.Regions;
 import com.turnover.model.Quarter;
 import com.turnover.model.Store;
+import com.turnover.service.ExcelFormatService;
 import com.turnover.service.ExcelService;
 import com.turnover.util.ExcelUtils;
 import com.turnover.util.FormulasUtils;
-import org.apache.poi.ss.usermodel.*;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellReference;
-import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -23,19 +27,21 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 
 @Service
+@RequiredArgsConstructor
 public class ExcelServiceImpl implements ExcelService {
     private final List<Integer> regionRows = new ArrayList<>();
     private List<Integer> summarizeColumns = new ArrayList<>();
-    private Workbook workbook;
+    private final ExcelFormatService excelFormatService;
 
     @Override
     public Workbook createTurnoverPlan(final List<Store> stores, final Quarter quarter) {
-        workbook = new XSSFWorkbook();
+        final Workbook workbook = new XSSFWorkbook();
         final Sheet sheet = workbook.createSheet("result");
 
         createHeader(sheet, quarter);
         populateSheetWithStores(sheet, stores);
         addRegionTotals(sheet);
+        excelFormatService.formatTurnOver(workbook, regionRows);
         return workbook;
     }
 
@@ -86,9 +92,7 @@ public class ExcelServiceImpl implements ExcelService {
         row.createCell(25).setCellValue(StringUtils.capitalize(secondMonth));
         row.createCell(26).setCellValue(StringUtils.capitalize(thirdMonth));
 
-        summarizeColumns = List.of(1, 2, 3,4,5,9,10,11,15,16,17,18,19,20);
-
-        row.setRowStyle(getHeaderStyle());
+        summarizeColumns = List.of(1, 2, 3, 4, 5, 9, 10, 11, 15, 16, 17, 18, 19, 20);
     }
 
     private void populateSheetWithStores(final Sheet sheet, final List<Store> stores) {
@@ -244,20 +248,6 @@ public class ExcelServiceImpl implements ExcelService {
                 cell.setCellValue((String) value);
             }
         }
-    }
-
-    private CellStyle getHeaderStyle() {
-        final CellStyle headerStyle = workbook.createCellStyle();
-        headerStyle.setFillForegroundColor(IndexedColors.GREY_80_PERCENT.getIndex());
-        headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-
-        final XSSFFont font = ((XSSFWorkbook) workbook).createFont();
-        font.setFontName("Arial");
-        font.setFontHeightInPoints((short) 16);
-        font.setBold(true);
-        headerStyle.setFont(font);
-
-        return headerStyle;
     }
 
     private String getDynamicName(final String... months) {
