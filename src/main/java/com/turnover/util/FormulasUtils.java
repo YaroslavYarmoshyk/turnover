@@ -5,6 +5,7 @@ import org.apache.poi.ss.util.CellReference;
 public final class FormulasUtils {
     public static final String IF = "IF";
     public static final String IFERROR = "IFERROR";
+    public static final String SUM = "SUM";
 
     public static String getRange(final int startRow, final int startColumn, final int endRow, final int endColumn) {
         final String from = new CellReference(startRow, startColumn).formatAsString();
@@ -18,6 +19,18 @@ public final class FormulasUtils {
 
     public static String getRegionSum(final int startRow, final int endRow, final int currentCol) {
         return "SUM(" + getRange(startRow, currentCol, endRow, currentCol) + ")";
+    }
+
+    public static String getSum(final String... cells) {
+        final StringBuilder stringBuilder = new StringBuilder(SUM).append("(");
+        for (int i = 0; i < cells.length; i++) {
+            if (i == cells.length - 1) {
+                stringBuilder.append(cells[i]).append(")");
+                break;
+            }
+            stringBuilder.append(cells[i]).append(",");
+        }
+        return stringBuilder.toString();
     }
 
     public static String getUnionRegionsSum(final int startRow, final int endRow, final int currentCol) {

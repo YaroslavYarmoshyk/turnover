@@ -149,6 +149,27 @@ public class ExcelServiceImpl implements ExcelService {
             row.getCell(7).setCellFormula(getDynFormula(regionRow, 7));
             row.getCell(8).setCellFormula(getDynFormula(regionRow, 8));
         }
+        addResultTotal(sheet);
+    }
+
+    private void addResultTotal(final Sheet sheet) {
+        final int totalRow = regionRows.get(regionRows.size() - 1);
+        regionRows.remove(regionRows.size() - 1); // remove total
+        regionRows.remove(regionRows.size() - 3); // remove union regions
+
+        for (final Integer col : summarizeColumns) {
+            final String[] cells = regionRows.stream()
+                    .map(row -> new CellReference(row, col))
+                    .map(CellReference::formatAsString)
+                    .toArray(String[]::new);
+            final String sumFormula = FormulasUtils.getSum(cells);
+            final Row resultRow = sheet.getRow(totalRow);
+
+            resultRow.getCell(col).setCellFormula(sumFormula);
+            resultRow.getCell(6).setCellFormula(getDynFormula(totalRow, 6));
+            resultRow.getCell(7).setCellFormula(getDynFormula(totalRow, 7));
+            resultRow.getCell(8).setCellFormula(getDynFormula(totalRow, 8));
+        }
     }
 
     private void populateRegion(int startRow, int endRow, Row row) {
