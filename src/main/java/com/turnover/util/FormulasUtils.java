@@ -62,6 +62,6 @@ public final class FormulasUtils {
     }
 
     public static String getDynFormula(final String firstMonthCell, final String secondMonthCell) {
-        return IFERROR + "(" + firstMonthCell + "/" + secondMonthCell + "-1,\"\")";
+        return IFERROR + "(" + secondMonthCell + "/" + firstMonthCell + "-1,\"\")";
     }
 }

@@ -20,7 +20,7 @@ public class Main {
         final ExcelFormatService excelFormatService = new ExcelFormatServiceImpl();
         final ExcelService excelService = new ExcelServiceImpl(excelFormatService);
 
-//        final Quarter quarter = quarterService.createQuarter(5, 22);
+//        final Quarter quarter = quarterService.createQuarter(8, 22);
         final Quarter quarter = quarterService.createQuarter();
         final List<Store> stores = storeService.getStores(quarter);
 //        calculationService.calculateDynamics(stores);
