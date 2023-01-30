@@ -45,7 +45,7 @@ public class ExcelFormatServiceImpl implements ExcelFormatService {
         ExcelUtils.applyCellStyle(sheet, darkGreyStyle, 0, lastFormatColumn, 0, lastFormatColumn + 6);
 
         ExcelUtils.applyCellStyle(sheet, darkGreenStyle, 0, 1);
-        ExcelUtils.applyCellStyle(sheet, darkGreenStyle, 0, 18, 0, 18 + 3);
+        ExcelUtils.applyCellStyle(sheet, darkGreenStyle, 0, 18, 0, 18 + 2);
 
         ExcelUtils.applyCellStyle(sheet, darkGreyStyle, 0, 2, 0, 2 + 4);
         ExcelUtils.applyCellStyle(sheet, darkGreyStyle, 0, 6, 0, 6 + 11);
